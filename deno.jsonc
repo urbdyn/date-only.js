@@ -1,16 +1,21 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "lib": ["deno.window"],
     "strict": true
   },
   "lint": {
     "files": {
-      "include": ["src/"],
-      "exclude": ["src/testdata/"]
+      "include": [
+        "src/"
+      ],
+      "exclude": [
+        "src/testdata/"
+      ]
     },
     "rules": {
-      "tags": ["recommended"],
+      "tags": [
+        "recommended"
+      ],
       "include": [
         "ban-untagged-todo",
         "camelcase",
@@ -24,7 +29,11 @@
   "fmt": {
     "files": {
       "include": ["."],
-      "exclude": ["dist/", "node_modules/", "cov_profile/"]
+      "exclude": [
+        "dist/",
+        "node_modules/",
+        "cov_profile/"
+      ]
     },
     "options": {
       "useTabs": false,

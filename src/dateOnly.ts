@@ -5,6 +5,7 @@ export class DateOnly {
   year: number;
   month: number;
   day: number;
+  utcEpoch?: number;
 
   constructor(y: number, m: number, d: number, fullValidation = true) {
     if (fullValidation && !DateOnly.isValidDate(y, m, d)) {
@@ -17,6 +18,19 @@ export class DateOnly {
     this.year = y;
     this.month = m;
     this.day = d;
+  }
+
+  public toString() {
+    return `${String(this.year).padStart(4, '0')}-${String(this.month).padStart(2, '0')
+      }-${String(this.day).padStart(2, '0')}`;
+  }
+
+  public valueOf() {
+    return this.toString()
+  }
+
+  public toJSON() {
+    return this.toString()
   }
 
   static newOrUndefined(y: number, m: number, d: number): DateOnly | undefined {
@@ -39,21 +53,23 @@ export class DateOnly {
     return new DateOnly(...x, false);
   }
 
-  static isValidDate(y: number, m: number, d: number): boolean {
+  static isValidDate(y: number, m: number, d: number): Date | false {
     if (!DateOnly.isValidDateLoose(y, m, d)) return false;
-    return !isNaN(
-      new Date(
-        `${String(y).padStart(4, '0')}-${String(m).padStart(2, '0')}-${
-          String(d).padStart(2, '0')
-        }`,
-      ).valueOf(),
-    );
+    const date = new Date(
+      `${String(y).padStart(4, '0')}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')} UTC`,
+    )
+    if (isNaN(date.valueOf())) return false
+    return date
   }
 
   static isValidDateLoose(y: number, m: number, d: number): boolean {
     return (Number.isInteger(y) && y > 0) &&
       (Number.isInteger(m) && m > 0 && m < 13) &&
       (Number.isInteger(d) && d > 0 && d < 32);
+  }
+
+  public getMinEpoch(): number {
+    return 0
   }
 }
 
@@ -73,4 +89,4 @@ export function parseStringToDateComponents(
 }
 
 /** Error for when Result attempts to do action and fails */
-export class ResultError extends Error {}
+export class ResultError extends Error { }
