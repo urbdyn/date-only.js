@@ -1,0 +1,28 @@
+{
+  "name": "@urbdyn/date-only",
+  "version": "0.0.1",
+  "description": "A micro library for actual \"dates\", not \"date times\"",
+  "author": "Urban Dynamics (https://www.urbdyn.com/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urbdyn/date-only.js.git"
+  },
+  "homepage": "https://github.com/urbdyn/date-only.js#readme",
+  "url": "https://github.com/urbdyn/date-only.js/issues",
+  "main": "dist/dateOnly.js",
+  "files": [
+    "dist/",
+    "!dist/**/*.js.map",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "deno test",
+    "fmt": "deno fmt",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  }
+}
