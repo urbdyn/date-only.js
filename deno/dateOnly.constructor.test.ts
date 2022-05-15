@@ -1,16 +1,52 @@
 import { assertEquals, assertThrows } from '../test_deps.ts';
 import { DateOnly } from '../mod.ts';
 
-Deno.test({
-  name: 'new DateOnly(2001,02,03) initializes year, month, and day properties',
-  fn: () => {
-    const d = new DateOnly(2001, 2, 3);
-    assertEquals(d.year, 2001);
-    assertEquals(d.month, 2);
-    assertEquals(d.day, 3);
-  },
+const dateTest20010203 = {
+  y: 2001,
+  m: 2,
+  d: 3,
+  utcStart: 981158400000,
+  utcEnd: 981244800000,
+};
+const date20010203UtcStart = 981158400000;
+const date20010203UtcEnd = 981244800000;
+
+const constructorTests = [
+  { ...dateTest20010203, tz: undefined },
+  { ...dateTest20010203, tz: 'local' },
+  { ...dateTest20010203, tz: 'min-max' },
+  { ...dateTest20010203, tz: 0 },
+  { ...dateTest20010203, tz: 3.5 },
+  { ...dateTest20010203, tz: +14 },
+  { ...dateTest20010203, tz: -12 },
+] as const;
+
+constructorTests.forEach((t) => {
+  Deno.test({
+    name:
+      `new DateOnly(${t.y},${t.m},${t.d},${t.tz}) initializes all properties properly`,
+    fn: () => {
+      const d = new DateOnly(t.y, t.m, t.d, t.tz);
+      const o = (t.tz === 'local' || t.tz === undefined)
+        ? new Array(2).fill(new Date().getTimezoneOffset() * 60 * 1000)
+        : t.tz === 'min-max'
+        ? [-43_200_000, 50_400_000]
+        : new Array(2).fill(t.tz * 60 * 60 * 1000);
+      assertEquals(d.year, t.y);
+      assertEquals(d.month, t.m);
+      assertEquals(d.day, t.d);
+      assertEquals(d.timezoneShift, t.tz !== undefined ? t.tz : 'local');
+      assertEquals(d.startEpoch - o[0], t.utcStart);
+      assertEquals(d.endEpoch - o[1], t.utcEnd);
+      assertEquals(
+        d.endEpoch - d.startEpoch,
+        (t.tz !== 'min-max' ? 24 : 50) * 60 * 60 * 1000,
+      );
+    },
+  });
 });
 
+/**
 Deno.test({
   name:
     'DateOnly.newOrUndefined(2001,02,03) initializes year, month, and day properties',
@@ -142,3 +178,4 @@ invalidDays.forEach((invalidDay) => {
       ),
   });
 });
+*/

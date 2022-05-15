@@ -16,6 +16,10 @@ Deno.bench('new DateOnly(2001, 2, 3)', () => {
   new DateOnly(2001, 2, 3);
 });
 
-Deno.bench('new DateOnly(2001, 2, 3, false)', () => {
-  new DateOnly(2001, 2, 3, false);
+Deno.bench('new DateOnly(2001, 2, 3, +4)', () => {
+  new DateOnly(2001, 2, 3, +4);
+});
+
+Deno.bench('new DateOnly(2001, 2, 3, "min-max")', () => {
+  new DateOnly(2001, 2, 3, 'min-max');
 });
