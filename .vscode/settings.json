@@ -1,0 +1,11 @@
+{
+  "deno.enable": true,
+  "deno.unstable": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "cSpell.words": [
+    "datetimes",
+    "Deno",
+    "urbdyn"
+  ]
+}
