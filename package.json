@@ -1,6 +1,6 @@
 {
   "name": "@urbdyn/date-only",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A micro library for actual \"dates\", not \"date times\"",
   "author": "Urban Dynamics (https://www.urbdyn.com/)",
   "license": "MIT",
